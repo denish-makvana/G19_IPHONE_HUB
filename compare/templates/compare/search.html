@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Banner Section -->
+<section class="py-5 text-center text-white" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
+    <h1 class="fw-bold">Search Results</h1>
+    {% if query %}
+        <p class="lead">Results for "<strong>{{ query }}</strong>"</p>
+    {% endif %}
+</section>
+
+<div class="container my-5">
+    {% if phones or laptops or accs %}
+        <div class="row">
+
+            <!-- PHONES -->
+            {% for item in phones %}
+            {% with phone=item.obj %}
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ phone.image.url }}" class="card-img-top" alt="{{ phone.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ phone.name }}</h5>
+
+                        <!-- Show all prices -->
+                        <p class="mb-1 text-success">Amazon: {% if phone.amazon_price %}₹{{ phone.amazon_price }}{% else %}-{% endif %}</p>
+                        <p class="mb-1 text-primary">Flipkart: {% if phone.flipkart_price %}₹{{ phone.flipkart_price }}{% else %}-{% endif %}</p>
+                        <p class="mb-1 text-success">Croma: {% if phone.croma_price %}₹{{ phone.croma_price }}{% else %}-{% endif %}</p>
+
+                        <!-- Button to store with lowest price -->
+                        {% if item.best_store %}
+                        <a href="{{ item.best_store.2 }}" class="btn btn-sm btn-outline-warning mt-2 w-100" target="_blank">
+                            Buy from {{ item.best_store.0|capfirst }} (₹{{ item.best_store.1 }})
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endwith %}
+            {% endfor %}
+
+            <!-- LAPTOPS -->
+            {% for item in laptops %}
+            {% with laptop=item.obj %}
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ laptop.image.url }}" class="card-img-top" alt="{{ laptop.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ laptop.name }}</h5>
+
+                        <!-- Show all prices -->
+                        <p class="mb-1 text-success">Amazon: {% if laptop.amazon_price %}₹{{ laptop.amazon_price }}{% else %}-{% endif %}</p>
+                        <p class="mb-1 text-primary">Flipkart: {% if laptop.flipkart_price %}₹{{ laptop.flipkart_price }}{% else %}-{% endif %}</p>
+                        <p class="mb-1 text-success">Croma: {% if laptop.croma_price %}₹{{ laptop.croma_price }}{% else %}-{% endif %}</p>
+
+                        <!-- Button to store with lowest price -->
+                        {% if item.best_store %}
+                        <a href="{{ item.best_store.2 }}" class="btn btn-sm btn-outline-warning mt-2 w-100" target="_blank">
+                            Buy from {{ item.best_store.0|capfirst }} (₹{{ item.best_store.1 }})
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endwith %}
+            {% endfor %}
+
+            <!-- ACCESSORIES -->
+            {% for item in accs %}
+            {% with acc=item.obj %}
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ acc.image.url }}" class="card-img-top" alt="{{ acc.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ acc.name }}</h5>
+
+                        <!-- Show all prices -->
+                        <p class="mb-1 text-success">Amazon: {% if acc.amazon_price %}₹{{ acc.amazon_price }}{% else %}-{% endif %}</p>
+                        <p class="mb-1 text-primary">Flipkart: {% if acc.flipkart_price %}₹{{ acc.flipkart_price }}{% else %}-{% endif %}</p>
+                        <p class="mb-1 text-success">Croma: {% if acc.croma_price %}₹{{ acc.croma_price }}{% else %}-{% endif %}</p>
+
+                        <!-- Button to store with lowest price -->
+                        {% if item.best_store %}
+                        <a href="{{ item.best_store.2 }}" class="btn btn-sm btn-outline-warning mt-2 w-100" target="_blank">
+                            Buy from {{ item.best_store.0|capfirst }} (₹{{ item.best_store.1 }})
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endwith %}
+            {% endfor %}
+
+        </div>
+    {% else %}
+        <div class="text-center">
+            <h4>No results found for "<strong>{{ query }}</strong>"</h4>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

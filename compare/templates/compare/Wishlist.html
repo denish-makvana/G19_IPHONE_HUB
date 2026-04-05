@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">My Wishlist ❤️</h2>
+
+    {% if wishlist_items %}
+    <div class="row g-4">
+        {% for item in wishlist_items %}
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center d-flex flex-column">
+
+                    {% if item.smartphone %}
+                        <img src="{{ item.smartphone.image.url }}" class="img-fluid mb-3" style="height:200px; object-fit:contain;">
+                        <h5 class="card-title text-truncate">{{ item.smartphone.name }}</h5>
+                        <p class="text-success fw-bold">₹{{ item.smartphone.amazon_price }}</p>
+
+                    {% elif item.laptop %}
+                        <img src="{{ item.laptop.image.url }}" class="img-fluid mb-3" style="height:200px; object-fit:contain;">
+                        <h5 class="card-title text-truncate">{{ item.laptop.name }}</h5>
+                        <p class="text-success fw-bold">₹{{ item.laptop.amazon_price }}</p>
+
+                    {% elif item.accessory %}
+                        <img src="{{ item.accessory.image.url }}" class="img-fluid mb-3" style="height:200px; object-fit:contain;">
+                        <h5 class="card-title text-truncate">{{ item.accessory.name }}</h5>
+                        <p class="text-success fw-bold">₹{{ item.accessory.amazon_price }}</p>
+
+                    {% elif item.product %}
+                        <img src="{{ item.product.image.url }}" class="img-fluid mb-3" style="height:200px; object-fit:contain;">
+                        <h5 class="card-title text-truncate">{{ item.product.name }}</h5>
+                        <p class="text-success fw-bold">₹{{ item.product.price }}</p>
+                    {% endif %}
+
+                    <div class="mt-auto">
+                        <a href="{% url 'remove_from_wishlist' item.id %}" class="btn btn-danger btn-sm w-100">Remove</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p class="text-center">No items in your wishlist.</p>
+    {% endif %}
+</div>
+{% endblock %}

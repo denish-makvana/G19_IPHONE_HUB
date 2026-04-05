@@ -1,0 +1,15 @@
+{% extends 'compare/base.html' %}
+{% block content %}
+<h2>User Reviews</h2>
+{% for review in reviews %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ review.name }}</h5>
+            <p class="card-text">{{ review.comment }}</p>
+            <p class="text-muted"><small>{{ review.created_at }}</small></p>
+        </div>
+    </div>
+{% empty %}
+    <p>No reviews yet.</p>
+{% endfor %}
+{% endblock %}

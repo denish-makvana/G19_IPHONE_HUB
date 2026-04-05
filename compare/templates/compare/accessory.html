@@ -1,0 +1,74 @@
+<form method="get">
+    <!-- Category dropdown -->
+    <label>Category:</label>
+    <select name="category" id="category">
+        <option value="">--Select--</option>
+        <option value="phone" {% if request.GET.category == 'phone' %}selected{% endif %}>Phone</option>
+        <option value="laptop" {% if request.GET.category == 'laptop' %}selected{% endif %}>Laptop</option>
+        <option value="accessory" {% if request.GET.category == 'accessory' %}selected{% endif %}>Accessory</option>
+    </select>
+
+    <!-- Phone filters -->
+    <div id="phone-filters" style="display:none;">
+        <label>Storage:</label>
+        <input type="text" name="storage" value="{{ request.GET.storage }}">
+        <label>Color:</label>
+        <input type="text" name="color" value="{{ request.GET.color }}">
+        <label>Network:</label>
+        <input type="text" name="network" value="{{ request.GET.network }}">
+    </div>
+
+    <!-- Laptop filters -->
+    <div id="laptop-filters" style="display:none;">
+        <label>RAM:</label>
+        <input type="text" name="ram" value="{{ request.GET.ram }}">
+        <label>Graphics:</label>
+        <input type="text" name="graphics" value="{{ request.GET.graphics }}">
+        <label>Brand:</label>
+        <input type="text" name="brand" value="{{ request.GET.brand }}">
+        <label>SSD:</label>
+        <input type="text" name="ssd" value="{{ request.GET.ssd }}">
+    </div>
+
+    <!-- Accessory filters -->
+    <div id="accessory-filters" style="display:none;">
+        <label>Type:</label>
+        <input type="text" name="accessory_type" value="{{ request.GET.accessory_type }}">
+        <label>Brand:</label>
+        <input type="text" name="acc_brand" value="{{ request.GET.acc_brand }}">
+    </div>
+
+    <button type="submit">Filter</button>
+</form>
+
+<hr>
+
+<!-- Products list -->
+<div>
+    {% for product in products %}
+        <p>{{ product.name }} - {{ product.category }} - ₹{{ product.price }}</p>
+    {% empty %}
+        <p>No products found.</p>
+    {% endfor %}
+</div>
+
+<script>
+// Show/hide filters based on selected category
+const categorySelect = document.getElementById('category');
+const phoneFilters = document.getElementById('phone-filters');
+const laptopFilters = document.getElementById('laptop-filters');
+const accessoryFilters = document.getElementById('accessory-filters');
+
+function showFilters() {
+    const value = categorySelect.value;
+    phoneFilters.style.display = value === 'phone' ? 'block' : 'none';
+    laptopFilters.style.display = value === 'laptop' ? 'block' : 'none';
+    accessoryFilters.style.display = value === 'accessory' ? 'block' : 'none';
+}
+
+// Initialize on page load
+showFilters();
+
+// Update when category changes
+categorySelect.addEventListener('change', showFilters);
+</script>
